@@ -1,4 +1,4 @@
-![Tutorial Codeigniter untuk Pemula](https://github.com/hd4y2t/SP_DempsterShafer/assets/img/home.bmp)
+![Tutorial Codeigniter untuk Pemula](https://github.com/hd4y2t/SP_DempsterShafer/blob/main/assets/img/home.bmp)
 
 ## Apa ini?
 
