@@ -125,7 +125,6 @@ class Home extends CI_Controller
                     $pilihan_user[] = $key;
                 endif;
             }
-
             $sql = "SELECT GROUP_CONCAT(penyakit.idpenyakit),rules.nilai
                                 FROM rules
                                 JOIN penyakit
@@ -139,27 +138,33 @@ class Home extends CI_Controller
             while ($row = $result->row()) {
                 $gejala[] = $row;
             }
-
-            $sql = "SELECT GROUP_CONCAT(Penyakit.kode_penyakit) FROM Penyakit";
+            // menentukan environment
+            $sql = "SELECT GROUP_CONCAT(penyakit.idpenyakit) FROM penyakit";
             $result = $this->db->query($sql);
             $row = $result->row();
             $fod = $row[0];
 
+            // menentukan nilai densitas
             $densitas_baru = array();
             while (!empty($gejala)) {
+                //nilai pada Y1 baris atas
                 $densitas1[0] = array_shift($gejala);
                 $densitas1[1] = array($fod, 1 - $densitas1[0][1]);
                 $densitas2 = array();
+                //nilai pada X1 baris 1
                 if (empty($densitas_baru)) {
                     $densitas2[0] = array_shift($gejala);
                 } else {
                     foreach ($densitas_baru as $k => $r) {
+                        //nilai pada X1 baris 2; jika ad densitas baru
                         if ($k != "&theta;") {
                             $densitas2[] = array($k, $r);
                         }
                     }
                 }
+                //bagian y1
                 $theta = 1;
+                //nilai X1 baris 2 teta
                 foreach ($densitas2 as $d) $theta -= $d[1];
                 $densitas2[] = array($fod, $theta);
                 $m = count($densitas2);
@@ -171,13 +176,15 @@ class Home extends CI_Controller
                             $w = explode(',', $densitas2[$y][0]);
                             sort($v);
                             sort($w);
-                            $vw = array_intersect($v, $w);
+                            $vw = array_intersect($v, $w);  //mencari nilai irisan
                             if (empty($vw)) {
                                 $k = "&theta;";
                             } else {
                                 $k = implode(',', $vw);
                             }
                             if (!isset($densitas_baru[$k])) {
+
+                                //data Y1r2
                                 $densitas_baru[$k] = $densitas1[$x][1] * $densitas2[$y][1];
                             } else {
                                 $densitas_baru[$k] += $densitas1[$x][1] * $densitas2[$y][1];
@@ -192,16 +199,18 @@ class Home extends CI_Controller
                 }
             }
 
+            //--- perangkingan
             unset($densitas_baru["&theta;"]);
             arsort($densitas_baru);
 
             $codes = array_keys($densitas_baru);
-            $sql = "SELECT * FROM Penyakit WHERE kode_penyakit IN('{$codes[0]}')";
-            $result = $this->db->query($sql)->row();
+            $sql = "SELECT * FROM penyakit WHERE id IN('{$codes[0]}')";
+            $result = $this->db->query($sql);
             $row = $result->row();
             echo '<h4>Berikut Hasil Diagnosa anda!</h4>';
-            echo "Anda kemungkinan mengidap penyakit <b>" . $row[1] . "</br> " . " % <br>";
-            echo "<a href=''>Klik disini untuk Melakukan diagnosa ulang</a>";
+
+            //--- menampilkan hasil akhir
+            echo "Anda kemungkinan mengidap penyakit <b>" . $row[0] . "</br> " . " % <br>";
         }
     }
 }

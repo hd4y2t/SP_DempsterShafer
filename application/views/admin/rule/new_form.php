@@ -33,23 +33,23 @@
 
 						<form action="<?php base_url('admin/rule/add') ?>" method="post" enctype="multipart/form-data">
 							<div class="form-group">
-								<label for="name">Penyakit*</label>
+								<label for="name">Penyakit</label>
 								<select class="form-control" id="penyakit" name="penyakit">
 									<?php foreach ($penyakit as $p) : ?>
-										<option value="<?= $p['idpenyakit']; ?>"><?= $p['namapenyakit'] ?></option>
+										<option value="<?= $p['id']; ?>"><?= $p['namapenyakit'] ?></option>
 									<?php endforeach; ?>
 								</select>
 							</div>
 							<div class="form-group">
-								<label for="name">Gejala*</label>
+								<label for="name">Gejala</label>
 								<select class="form-control" id="gejala" name="gejala">
 									<?php foreach ($gejala as $g) : ?>
-										<option value="<?= $g['idgejala']; ?>"><?= $g['namagejala'] ?></option>
+										<option value="<?= $g['id']; ?>"><?= $g['namagejala'] ?></option>
 									<?php endforeach; ?>
 								</select>
 							</div>
 							<div class="form-group">
-								<label for="name">Nilai*</label>
+								<label for="name">Nilai</label>
 								<input class="form-control" type="text" name="nilai" placeholder="Nilai Belief">
 							</div>
 							<input class="btn btn-success" type="submit" name="btn" value="Save" />

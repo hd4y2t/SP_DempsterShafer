@@ -16,12 +16,13 @@
 
 			<div class="container-fluid">
 
-				<?php //$this->load->view("admin/_partials/breadcrumb.php") ?>
+				<?php //$this->load->view("admin/_partials/breadcrumb.php") 
+				?>
 
-				<?php if ($this->session->flashdata('success')): ?>
-				<div class="alert alert-success" role="alert">
-					<?php echo $this->session->flashdata('success'); ?>
-				</div>
+				<?php if ($this->session->flashdata('success')) : ?>
+					<div class="alert alert-success" role="alert">
+						<?php echo $this->session->flashdata('success'); ?>
+					</div>
 				<?php endif; ?>
 
 				<div class="card mb-3">
@@ -30,11 +31,10 @@
 					</div>
 					<div class="card-body">
 
-						<form action="<?php base_url('admin/gejala/add') ?>" method="post" enctype="multipart/form-data" >
+						<form action="<?php base_url('admin/gejala/add') ?>" method="post" enctype="multipart/form-data">
 							<div class="form-group">
 								<label for="name">Nama Gejala</label>
-								<input class="form-control <?php echo form_error('namagejala') ? 'is-invalid':'' ?>"
-								 type="text" name="namagejala" placeholder="Nama gejala" />
+								<input class="form-control <?php echo form_error('namagejala') ? 'is-invalid' : '' ?>" type="text" name="namagejala" placeholder="Nama gejala" />
 								<div class="invalid-feedback">
 									<?php echo form_error('name') ?>
 								</div>
@@ -42,12 +42,12 @@
 							<div class="form-group">
 								<label for="name">Organ</label>
 								<select class="form-control" id="organ" name="organ">
-                                <option value="Daun">Daun</option>
-                                <option value="Akar">Akar</option>
-                                <option value="Batang">Batang</option>
-                                <option value="Buah">Buah</option>
-                                <option value="Bunga">Bunga</option>
-                            </select>
+									<option value="Daun">Daun</option>
+									<option value="Akar">Akar</option>
+									<option value="Batang">Batang</option>
+									<option value="Buah">Buah</option>
+									<option value="Bunga">Bunga</option>
+								</select>
 								<div class="invalid-feedback">
 									<?php echo form_error('organ') ?>
 								</div>

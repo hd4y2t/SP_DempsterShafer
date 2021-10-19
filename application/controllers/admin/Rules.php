@@ -29,36 +29,80 @@ class rules extends CI_Controller
         // $data["rules"] = $this->rule_model->getAll();
         $data['gejala'] = $this->gejala_model->getAll();
         $data['penyakit'] = $this->penyakit_model->getAll();
-        $rule = $this->rule_model;
-        $validation = $this->form_validation;
-        $validation->set_rules($rule->rules());
+        $data['title'] = 'Tambah Rule';
 
-        if ($validation->run()) {
-            $rule->save();
-            $this->session->set_flashdata('success', 'Berhasil disimpan');
-            redirect(site_url('admin/rules'));
+        $this->form_validation->set_rules('penyakit', 'Penyakit', 'required');
+        $this->form_validation->set_rules('gejala', 'Gejala', 'required');
+        $this->form_validation->set_rules('nilai', 'Nilai', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+
+            $this->load->view("admin/rule/new_form", $data);
+        } else {
+            $penyakit =  $this->input->post("penyakit", TRUE);
+            $gejala = $this->input->post("gejala", true);
+            $nilai = $this->input->post("nilai", true);
+            $idpenyakit = $this->db->get('rules')->num_rows();
+            $id = $idpenyakit + 1;
+            $save = [
+                'idrule' => 'R' . $id,
+                'penyakit_id' => $penyakit,
+                'gejala_id' => $gejala,
+                'nilai' => $nilai
+            ];
+
+            $this->db->insert('rules', $save);
+            $this->session->set_flashdata('success', 'Berhasil Ditambahkan!');
+            redirect(base_url("admin/rules"));
         }
-
-        $this->load->view("admin/rule/new_form", $data);
     }
+    // $rule = $this->rule_model;
+    // $validation = $this->form_validation;
+    // $validation->set_rules($rule->rules());
 
-    public function edit($id = null)
+    // if ($validation->run()) {
+    //     $rule->save();
+    //     $this->session->set_flashdata('success', 'Berhasil disimpan');
+    //     redirect(site_url('admin/rules'));
+    // }
+
+    // $this->load->view("admin/rule/new_form", $data);
+
+
+    public function edit($id)
     {
-        if (!isset($id)) redirect('admin/rules');
+        $data['title'] = 'Edit Rules';
+        $data['rules'] = $this->db->get_where('rules', ['id' => $id])->row_array();
+        $rules = $this->db->get_where('rules', ['id' => $id])->row_array();
+        $data['gejala'] = $this->gejala_model->getAll();
+        $data['penyakit'] = $this->penyakit_model->getAll();
 
-        $rule = $this->rule_model;
-        $validation = $this->form_validation;
-        $validation->set_rules($rule->rules());
+        $this->form_validation->set_rules('penyakit', 'penyakit', 'required');
+        $this->form_validation->set_rules('gejala', 'gejala', 'required');
+        $this->form_validation->set_rules('nilai', 'nilai', 'required');
 
-        if ($validation->run()) {
-            $rule->update($id);
-            $this->session->set_flashdata('success', 'Berhasil disimpan');
-            redirect(site_url('admin/rules'));
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('admin/rule/edit_form', $data);
+        } else {
+            $penyakit = $this->input->post('penyakit');
+            $gejala = $this->input->post('gejala');
+            $nilai = $this->input->post('nilai');
+
+            $this->db->set('penyakit_id', $penyakit);
+            $this->db->set('gejala_id', $gejala);
+            $this->db->set('nilai', $nilai);
+
+            $array = [
+                'penyakit_id' => $penyakit,
+                'gejala_id' => $gejala,
+                'nilai' => $nilai
+            ];
+            $this->db->where(['id' => $id]);
+            $this->db->update('rules', $array);
+            $this->session->set_flashdata('success', 'Data Rule No.' . $rules['idrule'] . ' Telah Diupdate!');
+
+            redirect(base_url('admin/rules'));
         }
-        $data["rule"] = $rule->getById($id);
-        if (!$data["rule"]) show_404();
-
-        $this->load->view("admin/rule/edit_form", $data);
     }
 
     public function delete($id = null)

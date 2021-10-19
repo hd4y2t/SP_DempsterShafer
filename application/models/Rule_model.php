@@ -13,23 +13,23 @@ class rule_model extends CI_Model
     {
         return [
             [
-                'field' => 'penyakit_id',
-                'label' => 'penyakit',
+                'field' => 'penyakit',
+                'label' => 'Penyakit',
                 'rules' => 'required'
             ],
         ];
 
         return [
             [
-                'field' => 'gejala_id',
-                'label' => 'gejala',
+                'field' => 'gejala',
+                'label' => 'Gejala',
                 'rules' => 'required'
             ],
         ];
         return [
             [
                 'field' => 'nilai',
-                'label' => 'nilai',
+                'label' => 'Nilai',
                 'rules' => 'required'
             ],
         ];
@@ -60,7 +60,6 @@ class rule_model extends CI_Model
                     FROM `rules`
                     JOIN `penyakit` ON `rules`.`penyakit_id` = `penyakit`.`id`
                     JOIN `gejala` ON `rules`.`gejala_id` = `gejala`.`id`
-                    ORDER BY penyakit_id
                    ";
         return $this->db->query($query)->result_array();
     }
@@ -83,10 +82,11 @@ class rule_model extends CI_Model
         $data = [
             "idrule" => $idbaru,
             "namarule" => $this->input->post('namarule', true),
-            "gejalarule" => $this->input->post('gejalarule', true)
+            "gejalarule" => $this->input->post('gejalarule', true),
+            "nilai" => $this->input->post('nilai', true)
         ];
 
-        $this->db->insert('rule', $data);
+        $this->db->insert('rules', $data);
         // $data = json_decode($this->curl->simple_post('http://localhost/spsemangka_restapi/api/rule/',$data, array(CURLOPT_BUFFERSIZE => 10)),true);
         // return $data;
     }
@@ -104,11 +104,12 @@ class rule_model extends CI_Model
         $data = [
             'idrule' => $id,
             "namarule" => $this->input->post('namarule', true),
-            "gejalarule" => $this->input->post('gejalarule', true)
+            "gejalarule" => $this->input->post('gejalarule', true),
+            "nilai" => $this->input->post('nilai', true)
         ];
 
         $this->db->where('id', $this->input->post('id'));
-        $this->db->update('rule', $data);
+        $this->db->update('rules', $data);
         // $data = json_decode($this->curl->simple_put('http://localhost/spsemangka_restapi/api/rule/', $data, array(CURLOPT_BUFFERSIZE => 10)), true);
         // return $data;
     }

@@ -16,7 +16,8 @@
 
 			<div class="container-fluid">
 
-				<?php //$this->load->view("admin/_partials/breadcrumb.php") ?>
+				<?php //$this->load->view("admin/_partials/breadcrumb.php") 
+				?>
 
 				<!-- DataTables -->
 				<div class="card mb-3">
@@ -24,11 +25,16 @@
 						<a href="<?php echo site_url('admin/gejalas/add') ?>"><i class="fas fa-plus"></i> Add New</a>
 					</div>
 					<div class="card-body">
-
+						<?php if ($this->session->flashdata('success') == TRUE) : ?>
+							<div class="alert alert-success">
+								<span><?= $this->session->flashdata('success'); ?></span>
+							</div>
+						<?php endif; ?>
 						<div class="table-responsive">
 							<table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
 								<thead>
 									<tr>
+										<th>No</th>
 										<th>ID Gejala</th>
 										<th>Nama Gejala</th>
 										<th>Organ Terserang</th>
@@ -36,24 +42,25 @@
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach ($gejalas as $gejala): ?>
-									<tr>
-										<td width="150">
-											<?php echo $gejala['idgejala'] ?>
-										</td>										
-										<td width="150">
-											<?php echo $gejala['namagejala'] ?>
-										</td>
-										<td width="150">
-											<?php echo $gejala['organ'] ?>
-										</td>
-										<td width="250">
-											<a href="<?php echo site_url('admin/gejalas/edit/'.$gejala['idgejala']) ?>"
-											 class="btn btn-small"><i class="fas fa-edit"></i> Edit</a>
-											<a onclick="deleteConfirm('<?php echo site_url('admin/gejalas/delete/'.$gejala['idgejala']) ?>')"
-											 href="#!" class="btn btn-small text-danger"><i class="fas fa-trash"></i> Hapus</a>
-										</td>
-									</tr>
+									<?php foreach ($gejalas as $gejala) : ?>
+										<tr>
+											<td width="50">
+												<?php echo $gejala['id'] ?>
+											</td>
+											<td width="150">
+												<?php echo $gejala['idgejala'] ?>
+											</td>
+											<td width="150">
+												<?php echo $gejala['namagejala'] ?>
+											</td>
+											<td width="150">
+												<?php echo $gejala['organ'] ?>
+											</td>
+											<td width="250">
+												<a href="<?php echo site_url('admin/gejalas/edit/' . $gejala['idgejala']) ?>" class="btn btn-small"><i class="fas fa-edit"></i> Edit</a>
+												<a onclick="deleteConfirm('<?php echo site_url('admin/gejalas/delete/' . $gejala['idgejala']) ?>')" href="#!" class="btn btn-small text-danger"><i class="fas fa-trash"></i> Hapus</a>
+											</td>
+										</tr>
 									<?php endforeach; ?>
 
 								</tbody>
@@ -81,10 +88,10 @@
 	<?php $this->load->view("admin/_partials/js.php") ?>
 
 	<script>
-	function deleteConfirm(url){
-		$('#btn-delete').attr('href', url);
-		$('#deleteModal').modal();
-	}
+		function deleteConfirm(url) {
+			$('#btn-delete').attr('href', url);
+			$('#deleteModal').modal();
+		}
 	</script>
 </body>
 

@@ -55,7 +55,7 @@ class gejala_model extends CI_Model
         $idakhir = $datakhir['idgejala'];
         $id = (int) substr($idakhir, 1);
 
-        $idbaru = 'P' .  (string) ($id + 1);
+        $idbaru = 'G' .  (string) ($id + 1);
 
         $data = [
             "idgejala" => $idbaru,
@@ -63,7 +63,7 @@ class gejala_model extends CI_Model
             "organ" => $this->input->post('organ', true)
         ];
 
-        $this->db->insert('mahasiswa', $data);
+        $this->db->insert('gejala', $data);
         // $data = json_decode($this->curl->simple_post('http://localhost/spsemangka_restapi/api/gejala/',$data, array(CURLOPT_BUFFERSIZE => 10)),true);
         // return $data;
     }
@@ -85,7 +85,7 @@ class gejala_model extends CI_Model
         ];
 
         $this->db->where('id', $this->input->post('id'));
-        $this->db->update('mahasiswa', $data);
+        $this->db->update('gejala', $data);
         // $data = json_decode($this->curl->simple_put('http://localhost/spsemangka_restapi/api/gejala/', $data, array(CURLOPT_BUFFERSIZE => 10)), true);
         // return $data;
     }

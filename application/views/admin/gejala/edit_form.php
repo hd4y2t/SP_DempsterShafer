@@ -16,12 +16,13 @@
 
 			<div class="container-fluid">
 
-				<?php //$this->load->view("admin/_partials/breadcrumb.php") ?>
+				<?php //$this->load->view("admin/_partials/breadcrumb.php") 
+				?>
 
-				<?php if ($this->session->flashdata('success')): ?>
-				<div class="alert alert-success" role="alert">
-					<?php echo $this->session->flashdata('success'); ?>
-				</div>
+				<?php if ($this->session->flashdata('success')) : ?>
+					<div class="alert alert-success" role="alert">
+						<?php echo $this->session->flashdata('success'); ?>
+					</div>
 				<?php endif; ?>
 
 				<!-- Card  -->
@@ -33,28 +34,31 @@
 					</div>
 					<div class="card-body">
 
-						<form action="<?php base_url(" admin/gejalas/edit") ?>" method="post"
-							enctype="multipart/form-data" >
+						<form action="" method="post" enctype="multipart/form-data">
 
-							<input type="hidden" name="id" value="<?php echo $gejala['idgejala']?>" />
+							<input type="hidden" name="id" value="<?php echo $gejala['id'] ?>" />
 
 							<div class="form-group">
 								<label for="name">Nama Gejala</label>
-								<input class="form-control <?php echo form_error('namagejala') ? 'is-invalid':'' ?>"
-								 type="text" name="namagejala" placeholder="Nama gejala" value="<?php echo $gejala['namagejala'] ?>" />
+								<input class="form-control <?php echo form_error('namagejala') ? 'is-invalid' : '' ?>" type="text" name="namagejala" placeholder="Nama gejala" value="<?php echo $gejala['namagejala'] ?>" />
 								<div class="invalid-feedback">
 									<?php echo form_error('name') ?>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="name">Organ Terserang</label>
-								<input class="form-control <?php echo form_error('organ') ? 'is-invalid':'' ?>"
-								 type="text" name="organ" placeholder="Nama gejala" value="<?php echo $gejala['organ'] ?>" />
-								<div class="invalid-feedback">
-									<?php echo form_error('name') ?>
+								<div class="form-group">
+									<label for="name">Organ</label>
+									<select class="form-control" id="organ" name="organ">
+										<option value="Daun" <?= $gejala['organ'] == 'Daun' ? 'selected="true"' : '' ?>>Daun</option>
+										<option value="Akar" <?= $gejala['organ'] == 'Akar' ? 'selected="true"' : '' ?>>Akar</option>
+										<option value="Batang" <?= $gejala['organ'] == 'Batang' ? 'selected="true"' : '' ?>>Batang</option>
+										<option value="Buah" <?= $gejala['organ'] == 'Buah' ? 'selected="true"' : '' ?>>Buah</option>
+										<option value="Bunga" <?= $gejala['organ'] == 'Bunga' ? 'selected="true"' : '' ?>>Bunga</option>
+									</select>
 								</div>
-							</div>
 
+							</div>
 
 							<input class="btn btn-success" type="submit" name="btn" value="Save" />
 						</form>

@@ -55,7 +55,7 @@ class penyakit_model extends CI_Model
             "kimiawi" => $this->input->post('kimiawi', true),
         ];
 
-        $this->db->insert('mahasiswa', $data);
+        $this->db->insert('penyakit', $data);
         // $data = json_decode($this->curl->simple_post('http://localhost/spsemangka_restapi/api/penyakit/', $data, array(CURLOPT_BUFFERSIZE => 10)), true);
         // return $data;
     }
@@ -80,14 +80,14 @@ class penyakit_model extends CI_Model
         ];
 
         $this->db->where('id', $this->input->post('id'));
-        $this->db->update('mahasiswa', $data);
+        $this->db->update('penyakit', $data);
         // $data = json_decode($this->curl->simple_put('http://localhost/spsemangka_restapi/api/penyakit/', $data, array(CURLOPT_BUFFERSIZE => 10)), true);
         // return $data;
     }
 
     public function delete($id)
     {
-        return $this->db->delete($this->_table, array("idpenyakit" => $id));
+        return $this->db->delete($this->_table, array("id" => $id));
         // $data = json_decode($this->curl->simple_delete('http://localhost/spsemangka_restapi/api/penyakit/', array('idpenyakit' => $id), array(CURLOPT_BUFFERSIZE => 10)), true);
         // return $data;
     }

@@ -16,91 +16,110 @@
 
 			<div class="container-fluid">
 
-				<?php //$this->load->view("admin/_partials/breadcrumb.php") ?>
+				<?php //$this->load->view("admin/_partials/breadcrumb.php") 
+				?>
 
-				<?php if ($this->session->flashdata('success')): ?>
-				<div class="alert alert-success" role="alert">
-					<?php echo $this->session->flashdata('success'); ?>
-				</div>
+				<?php if ($this->session->flashdata('success')) : ?>
+					<div class="alert alert-success" role="alert">
+						<?php echo $this->session->flashdata('success'); ?>
+					</div>
 				<?php endif; ?>
 
-				<!-- Card  -->
 				<div class="card mb-3">
 					<div class="card-header">
-
-						<a href="<?php echo site_url('admin/penyakits/') ?>"><i class="fas fa-arrow-left"></i>
-							Back</a>
+						<a href="<?php echo site_url('admin/penyakits/') ?>"><i class="fas fa-arrow-left"></i> Back</a>
 					</div>
 					<div class="card-body">
-
-						<form action="<?php base_url(" admin/penyakits/edit") ?>" method="post"
-							enctype="multipart/form-data" >
-
-							<input type="hidden" name="id" value="<?php echo $penyakit['idpenyakit']?>" />
-
+						<form action="" method="post" enctype="multipart/form-data">
 							<div class="form-group">
-								<label for="name">Nama OPT</label>
-								<input class="form-control <?php echo form_error('namapenyakit') ? 'is-invalid':'' ?>"
-								 type="text" name="namapenyakit" placeholder="Nama Penyakit" value="<?php echo $penyakit['namapenyakit'] ?>" />
+								<label for="name">Nama OPT*</label>
+								<input class="form-control <?php echo form_error('namapenyakit') ? 'is-invalid' : '' ?>" type="text" name="nama" value="<?= $penyakit['namapenyakit'] ?>" placeholder="Masukkan Nama OPT" />
 								<div class="invalid-feedback">
 									<?php echo form_error('name') ?>
 								</div>
 							</div>
-
 							<div class="form-group">
-								<label for="name">Jenis OPT</label>
-								<input class="form-control <?php echo form_error('jenis') ? 'is-invalid':'' ?>"
-								 type="text" name="jenis" placeholder="Jenis OPT" value="<?php echo $penyakit['jenis'] ?>" />
+
+								<label for="name">Jenis OPT*</label>
+								<select name="jenis" id="jenis" class="form-control">
+									<option value="Hama" <?= $penyakit['jenis'] == 'Hama' ? 'selected="true"' : '' ?>>Hama</option>
+									<option value="Penyakit" <?= $penyakit['jenis'] == 'Penyakit' ? 'selected="true"' : '' ?>>Penyakit</option>
+
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="name">Cara Penanganan Non-Kimiawi*</label>
+								<input class="form-control <?php echo form_error('nonkimiawi') ? 'is-invalid' : '' ?>" type="text" name="nkimia" value="<?= $penyakit['nonkimiawi'] ?>" placeholder="Masukkan Cara Penanganan Non-Kimiawi" />
 								<div class="invalid-feedback">
 									<?php echo form_error('name') ?>
 								</div>
 							</div>
-
 							<div class="form-group">
-								<label for="name">Penanganan Non-Kimiawi</label>
-								<input class="form-control <?php echo form_error('nonkimiawi') ? 'is-invalid':'' ?>"
-								 type="text" name="nonkimiawi" placeholder="Penanganan Non-Kimiawi" value="<?php echo $penyakit['nonkimiawi'] ?>" />
+								<label for="name">Cara Penanganan Kimiawi*</label>
+								<input class="form-control <?php echo form_error('kimiawi') ? 'is-invalid' : '' ?>" type="text" name="kimia" value="<?= $penyakit['kimiawi'] ?>" placeholder="Masukkan Cara Penanganan Kimiawi" />
 								<div class="invalid-feedback">
 									<?php echo form_error('name') ?>
 								</div>
 							</div>
-
 							<div class="form-group">
-								<label for="name">Penanganan Kimiawi</label>
-								<input class="form-control <?php echo form_error('kimiawi') ? 'is-invalid':'' ?>"
-								 type="text" name="kimiawi" placeholder="Penanganan Kimiawi" value="<?php echo $penyakit['kimiawi'] ?>" />
-								<div class="invalid-feedback">
-									<?php echo form_error('name') ?>
+								<div class=" form-group row">
+									<div class="col-sm">
+										<label for="name">Foto*</label>
+										<div class="custom-file">
+											<input type="file" class="custom-file-input" id="foto" name="foto" value="<?= $penyakit['foto'] ?>" aria-describedby="inputGroupFileAddon01">
+											<label class="custom-file-label" id="pilih" for="foto">Choose file</label>
+
+											<!-- <input type="file" class="custom-file-input" id="foto" name="foto">
+													<label class=" btn btn-outline-success btn-sm" id="pilih" for="foto"><i class="material-icons">search</i></label> -->
+										</div>
+										<div class="col-sm-3">
+											<img id="foto" src="<?= base_url('/assets/img/opt/') . $penyakit['foto'] ?> " class="img-thumbnail">
+										</div>
+									</div>
 								</div>
 							</div>
-						
-
-							<input class="btn btn-success" type="submit" name="btn" value="Save" />
+							<div class="mb-3 ml-3">
+								<input class="btn btn-success" type="submit" name="btn" value="Save" />
+							</div>
 						</form>
-
 					</div>
-
-					<div class="card-footer small text-muted">
-						* required fields
-					</div>
-
-
 				</div>
-				<!-- /.container-fluid -->
-
-				<!-- Sticky Footer -->
-				<?php $this->load->view("admin/_partials/footer.php") ?>
-
 			</div>
-			<!-- /.content-wrapper -->
-
 		</div>
-		<!-- /#wrapper -->
+	</div>
 
-		<?php $this->load->view("admin/_partials/scrolltop.php") ?>
+	<div class="card-footer small text-muted">
+		* required fields
+	</div>
+	</div>
+	<!-- /.container-fluid -->
 
-		<?php $this->load->view("admin/_partials/js.php") ?>
+	<!-- Sticky Footer -->
+	<?php $this->load->view("admin/_partials/footer.php") ?>
+
+	</div>
+	<!-- /.content-wrapper -->
+
+	</div>
+	<!-- /#wrapper -->
+
+
+	<?php $this->load->view("admin/_partials/scrolltop.php") ?>
+
+	<?php $this->load->view("admin/_partials/js.php") ?>
 
 </body>
 
 </html>
+<script type="text/javascript">
+	function gambar(a) {
+		if (a.files && a.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				document.getElementById('foto').src = e.target.result;
+			}
+			reader.readAsDataURL(a.files[0]);
+		}
+
+	}
+</script>

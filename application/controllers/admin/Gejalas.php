@@ -36,7 +36,7 @@ class gejalas extends CI_Controller
         $this->load->view("admin/gejala/new_form");
     }
 
-    public function edit($id = null)
+    public function edit($id)
     {
         if (!isset($id)) redirect('admin/gejalas');
 
