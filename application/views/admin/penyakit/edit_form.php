@@ -66,14 +66,14 @@
 									<div class="col-sm">
 										<label for="name">Foto*</label>
 										<div class="custom-file">
-											<input type="file" class="custom-file-input" id="foto" name="foto" value="<?= $penyakit['foto'] ?>" aria-describedby="inputGroupFileAddon01">
-											<label class="custom-file-label" id="pilih" for="foto">Choose file</label>
+											<input type="file" id="foto" name="foto" value="<?= $penyakit['foto'] ?>" aria-describedby="inputGroupFileAddon01">
+											<label id="pilih" for="foto">Choose file</label>
 
 											<!-- <input type="file" class="custom-file-input" id="foto" name="foto">
 													<label class=" btn btn-outline-success btn-sm" id="pilih" for="foto"><i class="material-icons">search</i></label> -->
 										</div>
 										<div class="col-sm-3">
-											<img id="foto" src="<?= base_url('/assets/img/opt/') . $penyakit['foto'] ?> " class="img-thumbnail">
+											<img id="gambar" src="<?= base_url('/assets/img/opt/') . $penyakit['foto'] ?> " class="img-thumbnail">
 										</div>
 									</div>
 								</div>
@@ -112,11 +112,20 @@
 
 </html>
 <script type="text/javascript">
+	var tm_pilih = document.getElementById('pilih');
+	var file = document.getElementById('foto');
+	tm_pilih.addEventListener('click', function() {
+		file.click();
+	})
+	file.addEventListener('change', function() {
+		gambar(this);
+	})
+
 	function gambar(a) {
 		if (a.files && a.files[0]) {
 			var reader = new FileReader();
 			reader.onload = function(e) {
-				document.getElementById('foto').src = e.target.result;
+				document.getElementById('gambar').src = e.target.result;
 			}
 			reader.readAsDataURL(a.files[0]);
 		}

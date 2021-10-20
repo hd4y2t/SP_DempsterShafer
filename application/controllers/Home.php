@@ -119,10 +119,28 @@ class Home extends CI_Controller
             $this->load->view("home/diagnosa", $data);
             $this->load->view("home/template/footer");
         } else {
+            $nama =  $this->input->post("nama", TRUE);
+            $alamat =  $this->input->post("alamat", TRUE);
+
+            // menyimpan data pengguna
+            $data = [
+                'nama' => $nama,
+                'alamat' => $alamat
+            ];
+            $this->db->insert('pengguna', $data);
+
+            // gejala yang dipilih user
             $pilihan_user = [];
             foreach ($_POST['gejala'] as $key => $value) {
                 if ($value > 0) :
                     $pilihan_user[] = $key;
+
+                    // menyimpan data gejala yang dipilih
+                    $rekam = [
+                        'nama' => $nama,
+                        'gejala' => $_POST['gejala']
+                    ];
+                    $this->db->insert('rekam', $rekam);
                 endif;
             }
             $sql = "SELECT GROUP_CONCAT(penyakit.idpenyakit),rules.nilai
@@ -203,14 +221,24 @@ class Home extends CI_Controller
             unset($densitas_baru["&theta;"]);
             arsort($densitas_baru);
 
+            // mendapatkan nilai akhir
             $codes = array_keys($densitas_baru);
             $sql = "SELECT * FROM penyakit WHERE id IN('{$codes[0]}')";
             $result = $this->db->query($sql);
             $row = $result->row();
-            echo '<h4>Berikut Hasil Diagnosa anda!</h4>';
+            $data['row'] = $result->row();
 
-            //--- menampilkan hasil akhir
-            echo "Anda kemungkinan mengidap penyakit <b>" . $row[0] . "</br> " . " % <br>";
+            // menyimpan hasil akhir
+            $hasil = [
+                'nama' => $nama,
+                'diagnosa' => $data['row']
+            ];
+            $this->db->insert('hasil', $hasil);
+
+            // mengirim hasil akhir ke tampilan
+            $this->load->view("home/template/header");
+            $this->load->view("home/hasil", $data);
+            $this->load->view("home/template/footer");
         }
     }
 }

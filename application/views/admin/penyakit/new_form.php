@@ -67,15 +67,15 @@
 									<div class="col-sm">
 										<label for="name">Foto*</label>
 										<div class="custom-file">
-											<input type="file" class="custom-file-input" id="foto" name="foto">
-											<label class="custom-file-label" id="pilih" for="foto"></label>
+											<input type="file" id="foto" name="foto">
+											<label class="" id="pilih" for="foto"></label>
 
 											<!-- <input type="file" class="custom-file-input" id="foto" name="foto">
 													<label class=" btn btn-outline-success btn-sm" id="pilih" for="foto"><i class="material-icons">search</i></label> -->
 										</div>
-										<!-- <div class="col-sm-3">
-													<img id="foto" src="" class="img-thumbnail">
-												</div> -->
+										<div class="col-sm-3">
+											<img id="gambar" src="" class="img-thumbnail">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -113,11 +113,20 @@
 
 </html>
 <script type="text/javascript">
+	var tm_pilih = document.getElementById('pilih');
+	var file = document.getElementById('foto');
+	tm_pilih.addEventListener('click', function() {
+		file.click();
+	})
+	file.addEventListener('change', function() {
+		gambar(this);
+	})
+
 	function gambar(a) {
 		if (a.files && a.files[0]) {
 			var reader = new FileReader();
 			reader.onload = function(e) {
-				document.getElementById('foto').src = e.target.result;
+				document.getElementById('gambar').src = e.target.result;
 			}
 			reader.readAsDataURL(a.files[0]);
 		}
