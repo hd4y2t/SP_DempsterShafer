@@ -12,5 +12,5 @@ Jika dirasa aplikasinya bermanfaat mungkin kiranya bisa mengapresiasi pengembang
 
 atau dapat scan barcode berikut
 
-(https://github.com/hd4y2t/SP_DempsterShafer/blob/main/assets/img/qrcode.png)
+![https://github.com/hd4y2t/SP_DempsterShafer/blob/main/assets/img/qrcode.png](https://github.com/hd4y2t/hd4y2t/blob/main/assets/img/qrcode.png)
 
